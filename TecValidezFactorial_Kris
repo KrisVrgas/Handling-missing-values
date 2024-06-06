@@ -1,0 +1,48 @@
+# Realizar un análisis factorial exploratorio
+> fa_result <- fa(datos, nfactors = 3, rotate = "varimax")
+> # Mostrar los resultados del análisis factorial
+> print(fa_result)
+Factor Analysis using method =  minres
+Call: fa(r = datos, nfactors = 3, rotate = "varimax")
+Standardized loadings (pattern matrix) based upon correlation matrix
+     MR2  MR1  MR3   h2   u2 com
+V1  0.20 0.76 0.12 0.63 0.37 1.2
+V2  0.15 0.71 0.17 0.56 0.44 1.2
+V3  0.12 0.75 0.16 0.60 0.40 1.2
+V4  0.12 0.72 0.08 0.54 0.46 1.1
+V5  0.74 0.15 0.14 0.58 0.42 1.2
+V6  0.78 0.16 0.14 0.66 0.34 1.2
+V7  0.76 0.15 0.15 0.63 0.37 1.2
+V8  0.80 0.15 0.10 0.68 0.32 1.1
+V9  0.21 0.19 0.81 0.73 0.27 1.2
+V10 0.15 0.09 0.80 0.68 0.32 1.1
+V11 0.10 0.19 0.76 0.62 0.38 1.2
+
+                       MR2  MR1  MR3
+SS loadings           2.54 2.33 2.02
+Proportion Var        0.23 0.21 0.18
+Cumulative Var        0.23 0.44 0.63
+Proportion Explained  0.37 0.34 0.29
+Cumulative Proportion 0.37 0.71 1.00
+
+Mean item complexity =  1.2
+Test of the hypothesis that 3 factors are sufficient.
+
+df null model =  55  with the objective function =  5.36 with Chi Square =  1579.71
+df of  the model are 25  and the objective function was  0.07 
+
+The root mean square of the residuals (RMSR) is  0.01 
+The df corrected root mean square of the residuals is  0.02 
+
+The harmonic n.obs is  300 with the empirical chi square  5.77  with prob <  1 
+The total n.obs was  300  with Likelihood Chi Square =  21.02  with prob <  0.69 
+
+Tucker Lewis Index of factoring reliability =  1.006
+RMSEA index =  0  and the 90 % confidence intervals are  0 0.037
+BIC =  -121.58
+Fit based upon off diagonal values = 1
+Measures of factor score adequacy             
+                                                   MR2  MR1  MR3
+Correlation of (regression) scores with factors   0.92 0.91 0.92
+Multiple R square of scores with factors          0.85 0.82 0.84
+Minimum correlation of possible factor scores     0.70 0.64 0.68
