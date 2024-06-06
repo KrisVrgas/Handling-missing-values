@@ -1,0 +1,59 @@
+# Instalar y cargar paquetes necesarios
+install.packages("MASS")
+install.packages("psych")
+install.packages("writexl")
+
+library(MASS)
+library(psych)
+library(writexl)
+
+# Establecer semilla para reproducibilidad
+set.seed(123)
+
+# Número de observaciones
+n <- 300
+
+# Media de cada ítem
+mu <- rep(0, 12)
+
+# Matriz de correlaciones (estructura factorial)
+Sigma <- matrix(c(
+  1, 0.7, 0.7, 0.7, 0, 0, 0, 0, 0, 0, 0, 0,
+  0.7, 1, 0.7, 0.7, 0, 0, 0, 0, 0, 0, 0, 0,
+  0.7, 0.7, 1, 0.7, 0, 0, 0, 0, 0, 0, 0, 0,
+  0.7, 0.7, 0.7, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 1, 0.7, 0.7, 0.7, 0, 0, 0, 0,
+  0, 0, 0, 0, 0.7, 1, 0.7, 0.7, 0, 0, 0, 0,
+  0, 0, 0, 0, 0.7, 0.7, 1, 0.7, 0, 0, 0, 0,
+  0, 0, 0, 0, 0.7, 0.7, 0.7, 1, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 1, 0.7, 0.7, 0.7,
+  0, 0, 0, 0, 0, 0, 0, 0, 0.7, 1, 0.7, 0.7,
+  0, 0, 0, 0, 0, 0, 0, 0, 0.7, 0.7, 1, 0.7,
+  0, 0, 0, 0, 0, 0, 0, 0, 0.7, 0.7, 0.7, 1
+), nrow = 12, ncol = 12)
+
+# Generar los datos
+datos <- mvrnorm(n = n, mu = mu, Sigma = Sigma)
+
+# Convertir a data frame
+datos <- as.data.frame(datos)
+colnames(datos) <- paste0("Item", 1:12)
+
+# Ver los primeros datos
+head(datos)
+
+# Realizar un análisis factorial exploratorio
+fa_result <- fa(datos, nfactors = 3, rotate = "varimax")
+
+# Mostrar los resultados del análisis factorial
+print(fa_result)
+
+# Visualizar la carga de los ítems en los factores
+fa.diagram(fa_result)
+
+# Guardar los datos en un archivo Excel
+ruta <- "datos_simulados.xlsx"
+write_xlsx(datos, ruta)
+
+# Mostrar la ruta donde se guardó el archivo
+cat("Los datos se guardaron en:", normalizePath(ruta), "\n")
