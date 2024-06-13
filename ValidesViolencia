@@ -1,0 +1,43 @@
+# Instalar y cargar las librerías necesarias
+install.packages("readxl")
+install.packages("psych")
+install.packages("ggplot2")
+install.packages("dplyr")
+
+library(readxl)
+library(psych)
+library(ggplot2)
+library(dplyr)
+
+# Ruta del archivo
+file_path <- "C:/Users/krisl/Downloads/Valifac.xlsx"
+
+# Cargar los datos desde el archivo Excel
+datos <- read_excel(file_path)
+
+# Explorar la estructura de los datos
+str(datos)
+
+# Visualizar las primeras filas del conjunto de datos
+head(datos)
+
+# Calcular el alfa de Cronbach para todos los ítems
+alpha_result <- psych::alpha(datos)
+
+# Imprimir los resultados del alfa de Cronbach
+print(alpha_result)
+
+# Realizar el análisis factorial exploratorio
+fa_result <- psych::fa(datos, nfactors=3, rotate="varimax")
+
+# Imprimir los resultados del análisis factorial
+print(fa_result)
+
+# Graficar la carga factorial
+psych::fa.diagram(fa_result)
+
+# Gráfico Scree Plot
+fa.parallel(datos, fa="fa")
+
+# Gráfico de cargas factoriales
+fa.plot(fa_result)
