@@ -1,0 +1,32 @@
+# Cargar paquetes
+library(ltm)
+library(ggplot2)
+library(psych)
+library(reshape2)
+
+# Cargar los datos desde un archivo CSV
+data <- read.csv("C:/Users/krisl/Downloads/mercadosleche.csv")
+
+# Ver las primeras filas de los datos para verificar la carga correcta
+head(data)
+
+# Selección de las columnas de interés para el análisis TRI
+items <- data[, c("Preferencia", "Lugar_Compra", "Problema_natural", "Mejora_vendedores", "Factor_comprar", "Validacion")]
+
+# Asegurarse de que las columnas seleccionadas estén en el formato correcto
+str(items)
+
+# Ajustar un modelo de Respuesta Gradual (Graded Response Model)
+modelo_grm <- grm(items)
+
+# Resumen del modelo
+summary(modelo_grm)
+
+# Graficar las curvas características de los ítems (ICC) para el modelo GRM
+plot(modelo_grm, type = "ICC")
+
+# Calcular y graficar las curvas de información de los ítems
+plot(modelo_grm, type = "IIC")
+
+# Calcular y graficar la curva de información total
+plot(modelo_grm, type = "IIC", items = 0)
