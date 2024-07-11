@@ -1,0 +1,46 @@
+# Cargar paquetes
+library(ggplot2)
+library(dplyr)
+library(car)
+
+# Cargar los datos desde un archivo CSV
+data <- read.csv("C:/Users/krisl/Downloads/mercadosleche.csv")
+
+# Ver las primeras filas de los datos para verificar la carga correcta
+head(data)
+
+# Convertir las variables necesarias a factores si aún no lo están
+data$Genero <- as.factor(data$Genero)
+data$Nivel_Educativo <- as.factor(data$Nivel_Educativo)
+data$Ocupacion <- as.factor(data$Ocupacion)
+data$Ingreso <- as.factor(data$Ingreso)
+data$Frecuencia_Consumo <- as.numeric(as.character(data$Frecuencia_Consumo))
+
+# Verificar la estructura de los datos
+str(data)
+
+# Ajustar el modelo de ANOVA
+modelo_anova <- aov(Frecuencia_Consumo ~ Genero + Nivel_Educativo + Ocupacion + Ingreso, data = data)
+
+# Resumen del modelo de ANOVA
+summary(modelo_anova)
+
+# Boxplot para "Genero" vs "Frecuencia_Consumo"
+ggplot(data, aes(x = Genero, y = Frecuencia_Consumo)) +
+  geom_boxplot() +
+  labs(title = "Frecuencia de Consumo según Género", x = "Género", y = "Frecuencia de Consumo")
+
+# Boxplot para "Nivel_Educativo" vs "Frecuencia_Consumo"
+ggplot(data, aes(x = Nivel_Educativo, y = Frecuencia_Consumo)) +
+  geom_boxplot() +
+  labs(title = "Frecuencia de Consumo según Nivel Educativo", x = "Nivel Educativo", y = "Frecuencia de Consumo")
+
+# Boxplot para "Ocupacion" vs "Frecuencia_Consumo"
+ggplot(data, aes(x = Ocupacion, y = Frecuencia_Consumo)) +
+  geom_boxplot() +
+  labs(title = "Frecuencia de Consumo según Ocupación", x = "Ocupación", y = "Frecuencia de Consumo")
+
+# Boxplot para "Ingreso" vs "Frecuencia_Consumo"
+ggplot(data, aes(x = Ingreso, y = Frecuencia_Consumo)) +
+  geom_boxplot() +
+  labs(title = "Frecuencia de Consumo según Ingreso", x = "Ingreso", y = "Frecuencia de Consumo")
