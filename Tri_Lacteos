@@ -1,0 +1,54 @@
+# Cargar paquetes
+library(ltm)
+library(ggplot2)
+library(psych)
+library(reshape2)
+
+# Cargar los datos desde un archivo CSV
+data <- read.csv("C:/Users/krisl/Downloads/mercadosleche.csv")
+
+# Ver las primeras filas de los datos para verificar la carga correcta
+head(data)
+
+# Convertir las variables a factores si es necesario
+data$Genero <- as.factor(data$Genero)
+#data$Nivel_Educativo <- as.factor(data$Nivel_Educativo)
+#data$Ocupacion <- as.factor(data$Ocupacion)
+#data$Ingreso <- as.factor(data$Ingreso)
+#data$Frecuencia_Consumo <- as.factor(data$Frecuencia_Consumo)
+data$Preferencia <- as.factor(data$Preferencia)
+data$Lugar_Compra <- as.factor(data$Lugar_Compra)
+data$Problema_natural <- as.factor(data$Problema_natural)
+data$Mejora_vendedores <- as.factor(data$Mejora_vendedores)
+data$Factor_comprar <- as.factor(data$Factor_comprar)
+data$Validacion <- as.factor(data$Validacion)
+
+# Selección de las columnas de interés para el análisis TRI
+#items <- data[, c("Preferencia", "Lugar_Compra", "Problema_natural", "Mejora_vendedores", "Factor_comprar", "Validacion")]
+items <- data[, c("Preferencia", "Genero")]
+
+# Ajustar un modelo TRI de un parámetro (modelo Rasch)
+modelo_rasch <- rasch(items)
+
+# Resumen del modelo
+summary(modelo_rasch)
+
+# Ajustar un modelo TRI de dos parámetros (modelo 2PL)
+modelo_2pl <- ltm(items ~ z1)
+
+# Resumen del modelo
+summary(modelo_2pl)
+
+# Graficar las curvas características de los ítems (ICC) para el modelo Rasch
+plot(modelo_rasch, type = "ICC")
+
+# Graficar las curvas características de los ítems (ICC) para el modelo 2PL
+plot(modelo_2pl, type = "ICC")
+
+# Calcular y graficar las curvas de información de los ítems
+plot(modelo_rasch, type = "IIC")
+plot(modelo_2pl, type = "IIC")
+
+# Calcular y graficar la curva de información total
+plot(modelo_rasch, type = "IIC", items = 0)
+plot(modelo_2pl, type = "IIC", items = 0)
